@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:to_do_app/components/sign_in.dart';
-import 'package:to_do_app/components/sign_up.dart';
 import 'package:to_do_app/pages/home/home.dart';
+import 'package:to_do_app/pages/landing/sign_in.dart';
+import 'package:to_do_app/pages/landing/sign_up.dart';
 
 ///Task 1: Landing Page
 
