@@ -5,6 +5,8 @@ import 'package:to_do_app/components/sign_in.dart';
 import 'package:to_do_app/components/sign_up.dart';
 import 'package:to_do_app/pages/home/home.dart';
 
+///Task 1: Landing Page
+
 class LandingDesktop extends ConsumerWidget {
   const LandingDesktop({Key? key}) : super(key: key);
 
