@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_app/services/controller.dart';
 import 'package:to_do_app/services/providers.dart';
 
-final formKey = GlobalKey<FormState>();
+final dropdownTagKey = GlobalKey<FormState>();
 
 class DropdownTag extends ConsumerStatefulWidget {
   const DropdownTag({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _DropdownTagState extends ConsumerState<DropdownTag> {
   Widget build(BuildContext context) {
     final tagListAsyncValue = ref.watch(tagsListProvider);
     return Form(
-      key: formKey,
+      key: dropdownTagKey,
       child: tagListAsyncValue.when(
         data: (data) {
           final list = List<String>.generate(data.docs.length, (index) {

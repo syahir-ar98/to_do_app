@@ -7,6 +7,7 @@ class ToDo {
   String tag;
   bool isCompleted;
   DateTime createdOn;
+  String uid;
 
   ToDo({
     required this.id,
@@ -15,6 +16,7 @@ class ToDo {
     required this.tag,
     required this.isCompleted,
     required this.createdOn,
+    required this.uid,
   });
 
   ToDo.fromJson(Map<String, dynamic> json)
@@ -25,6 +27,7 @@ class ToDo {
           tag: json['tag'] as String,
           isCompleted: json['isCompleted'] as bool,
           createdOn: Utils.toDateTime(json['createdOn']),
+          uid: json['uid'] as String,
         );
 
   Map<String, Object?> toJson() {
@@ -35,6 +38,7 @@ class ToDo {
       'tag': tag,
       'isCompleted': isCompleted,
       'createdOn': Utils.fromDateTimetoJson(createdOn),
+      'uid': uid,
     };
   }
 }

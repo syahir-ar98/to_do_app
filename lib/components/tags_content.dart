@@ -56,13 +56,13 @@ class TagsContent extends ConsumerWidget {
                     );
                   },
                   error: (e, st) => DataCell(Text("Error $e")),
-                  loading: () => const DataCell(CircularProgressIndicator()))
+                  loading: () => const DataCell(Center(child: CircularProgressIndicator())))
             ]);
           }),
         );
       },
       error: (e, st) => Text("Error: $e"),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
 }

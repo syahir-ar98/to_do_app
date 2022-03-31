@@ -21,7 +21,7 @@ class AuthenticationWrapper extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _userAsync = ref.watch(firebaseAuthStateProvider);
+    final _userAsync = ref.watch(authStateProvider);
     return _userAsync.when(
       data: (data) => data != null ? const HomePage() : const LandingPage(),
       error: (e, st) => const Center(child: Text('Error Occured!')),

@@ -117,7 +117,7 @@ class SignIn extends ConsumerWidget {
             width: double.maxFinite,
             child: TextButton(
               onPressed: () {
-                ref.read(firebaseAuthServiceProvider).signIn(emailController.text, passwordController.text).then(
+                ref.read(authServiceProvider).signIn(emailController.text, passwordController.text).then(
                       (value) => ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           width: 300.0,

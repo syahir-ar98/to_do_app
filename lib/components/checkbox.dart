@@ -33,7 +33,7 @@ class _CustomCheckBoxState extends ConsumerState<CustomCheckBox> {
           setState(() {
             isChecked = value!;
           });
-          ref.read(firestoreServiceProvider).updateTodo(widget.id, true, isCompleted: value);
+          ref.read(dataServiceProvider).updateTodo(widget.id, true, isCompleted: value);
           debugPrint("Value: $value.");
         },
       ),

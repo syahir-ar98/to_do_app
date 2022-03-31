@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_app/components/editdropdown_tag.dart';
 import 'package:to_do_app/services/controller.dart';
 import 'package:to_do_app/services/firestore_database.dart';
+import 'package:to_do_app/services/providers.dart';
 
 class EditTodo extends ConsumerWidget {
   const EditTodo({
@@ -137,7 +138,7 @@ class EditTodo extends ConsumerWidget {
                       height: 48.0,
                       child: TextButton(
                         onPressed: () {
-                          DatabaseService().updateTodo(id, false);
+                          ref.watch(dataServiceProvider).updateTodo(id, false);
                           titleController.clear();
                           descController.clear();
                           tagController.clear();

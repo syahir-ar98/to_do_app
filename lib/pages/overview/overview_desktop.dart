@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_do_app/components/add_todo.dart';
 import 'package:to_do_app/components/summary_content.dart';
 import 'package:to_do_app/components/tags_content.dart';
+import 'package:to_do_app/services/providers.dart';
 
 class OverviewDesktop extends ConsumerWidget {
   const OverviewDesktop({Key? key}) : super(key: key);
@@ -84,47 +85,6 @@ class OverviewDesktop extends ConsumerWidget {
                                     ),
                                   ),
                                   const Spacer(),
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: GestureDetector(
-                                      behavior: HitTestBehavior.translucent,
-                                      child: Container(
-                                        height: 48.0,
-                                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFDC59F),
-                                          borderRadius: BorderRadius.circular(8.0),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              EvaIcons.plus,
-                                              size: 24.0,
-                                              color: Color(0xFFC4421A),
-                                            ),
-                                            const SizedBox(width: 8.0),
-                                            Text(
-                                              "TASK",
-                                              style: GoogleFonts.inter(
-                                                color: const Color(0xFFC4421A),
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        showDialog(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return const AddTodo();
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  )
                                 ],
                               ),
                               const SizedBox(height: 24.0),
@@ -173,43 +133,43 @@ class OverviewDesktop extends ConsumerWidget {
                                     ),
                                   ),
                                   const Spacer(),
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: GestureDetector(
-                                      behavior: HitTestBehavior.translucent,
-                                      child: Container(
-                                        height: 48.0,
-                                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFDC59F),
-                                          borderRadius: BorderRadius.circular(8.0),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            const Icon(
-                                              EvaIcons.editOutline,
-                                              size: 24.0,
-                                              color: Color(0xFFC4421A),
-                                            ),
-                                            const SizedBox(width: 8.0),
-                                            Text(
-                                              "EDIT",
-                                              style: GoogleFonts.inter(
-                                                color: const Color(0xFFC4421A),
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () {},
-                                    ),
-                                  )
+                                  // MouseRegion(
+                                  //   cursor: SystemMouseCursors.click,
+                                  //   child: GestureDetector(
+                                  //     behavior: HitTestBehavior.translucent,
+                                  //     child: Container(
+                                  //       height: 48.0,
+                                  //       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  //       decoration: BoxDecoration(
+                                  //         color: const Color(0xFFFDC59F),
+                                  //         borderRadius: BorderRadius.circular(8.0),
+                                  //       ),
+                                  //       child: Row(
+                                  //         children: [
+                                  //           const Icon(
+                                  //             EvaIcons.editOutline,
+                                  //             size: 24.0,
+                                  //             color: Color(0xFFC4421A),
+                                  //           ),
+                                  //           const SizedBox(width: 8.0),
+                                  //           Text(
+                                  //             "EDIT",
+                                  //             style: GoogleFonts.inter(
+                                  //               color: const Color(0xFFC4421A),
+                                  //               fontSize: 16.0,
+                                  //               fontWeight: FontWeight.w700,
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //     onTap: () {},
+                                  //   ),
+                                  // )
                                 ],
                               ),
                               const SizedBox(height: 16.0),
-                              const TagsContent(),
+                              const Expanded(child: TagsContent()),
                             ],
                           ),
                         ),
@@ -221,13 +181,100 @@ class OverviewDesktop extends ConsumerWidget {
                 Expanded(
                   child: Container(
                     height: double.maxFinite,
-                    padding: const EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 56.0),
                     decoration: BoxDecoration(
                       color: const Color(0xFFFFFFFF),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Text(
+                            "WELCOME BACK",
+                            style: GoogleFonts.inter(
+                              color: const Color(0xFF696969),
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 48.0),
+                          child: Consumer(
+                            builder: (_, ref, __) {
+                              final _userAsync = ref.watch(userProvider);
+                              return _userAsync.when(
+                                data: (data) {
+                                  final _user = data.data()!;
+                                  return Text(
+                                    _user.name,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 36.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  );
+                                },
+                                error: (e, st) => Text("Error: $e"),
+                                loading: () => const Center(child: CircularProgressIndicator()),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 48.0),
+                          child: Container(
+                            height: 2.0,
+                            decoration: const BoxDecoration(color: Color(0xFFDCDCDC)),
+                          ),
+                        ),
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            child: Container(
+                              height: 48.0,
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFDC59F),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // const Icon(
+                                  //   EvaIcons.plus,
+                                  //   size: 24.0,
+                                  //   color: Color(0xFFC4421A),
+                                  // ),
+                                  // const SizedBox(width: 8.0),
+                                  Text(
+                                    "ADD NEW TASK",
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xFFC4421A),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const AddTodo();
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),

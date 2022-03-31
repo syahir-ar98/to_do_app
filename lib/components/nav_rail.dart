@@ -43,8 +43,7 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
               padding: const EdgeInsets.only(left: 8.0, bottom: 48.0),
               child: Row(
                 children: [
-                  // ignore: todo
-                  // TODO: Add your logo here
+                  // Add your logo here
                   // Image.asset(
                   //   "assets/images/logo-toDoApp.png",
                   //   width: 32.0,
@@ -114,7 +113,7 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
                 icon: EvaIcons.logOutOutline,
                 logic: () {
                   ref.read(currentMenuProvider.state).state = "Overview";
-                  ref.read(firebaseAuthServiceProvider).signOut();
+                  ref.read(authServiceProvider).signOut();
                   emailController.clear();
                   passwordController.clear();
                 },
@@ -149,28 +148,41 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Syahir AR",
-                          style: GoogleFonts.inter(
-                            color: const Color(0xFF696969),
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w700,
+                    child: Consumer(
+                      builder: (_, ref, __) {
+                        final _user = ref.watch(userProvider);
+                        return _user.when(
+                          data: (data) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.data()!.name,
+                                  style: GoogleFonts.inter(
+                                    color: const Color(0xFF696969),
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.data()!.occupation,
+                                  style: GoogleFonts.inter(
+                                    color: const Color(0xFF00695C),
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          error: (e, st) => Text("Error: $e"),
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                          "Student",
-                          style: GoogleFonts.inter(
-                            color: const Color(0xFF00695C),
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                   const Spacer(),

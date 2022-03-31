@@ -2,15 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/models/tag.dart';
 import 'package:to_do_app/models/todo.dart';
+import 'package:to_do_app/models/user.dart';
 import 'package:to_do_app/services/controller.dart';
-import 'package:to_do_app/services/utils.dart';
 
-///Task Todo List (CRUD)
-///Task Database
+///Task 2: Todo List (CRUD)
+///Task 5: Database
 
 final _firestore = FirebaseFirestore.instance;
 
 class DatabaseService {
+  final String uid;
+  DatabaseService({required this.uid});
+
   static final _todosRef = _firestore.collection("todos").withConverter(
         fromFirestore: (snapshot, _) => ToDo.fromJson(snapshot.data()!),
         toFirestore: (todo, _) => todo.toJson(),
@@ -19,6 +22,11 @@ class DatabaseService {
   static final _tagRef = _firestore.collection("tags").withConverter(
         fromFirestore: (snapshot, _) => Tag.fromJson(snapshot.data()!),
         toFirestore: (tag, _) => tag.toJson(),
+      );
+
+  static final _userRef = _firestore.collection("users").withConverter(
+        fromFirestore: (snapshot, _) => UserData.fromJson(snapshot.data()!),
+        toFirestore: (user, _) => user.toJson(),
       );
 
   Future<void> addTodo(String title, String desc, String tag) async {
@@ -32,6 +40,7 @@ class DatabaseService {
           tag: tag,
           isCompleted: false,
           createdOn: DateTime.now().toLocal(),
+          uid: uid,
         ))
         .then((value) => debugPrint("New task added."))
         .catchError(
@@ -40,7 +49,7 @@ class DatabaseService {
   }
 
   Future<void> deleteTodo(String id) async {
-    _todosRef
+    await _todosRef
         .doc(id)
         .delete()
         .then((value) => debugPrint("Task deleted."))
@@ -49,7 +58,7 @@ class DatabaseService {
 
   Future<void> updateTodo(String id, bool isUpdatingStatus, {bool? isCompleted}) async {
     isUpdatingStatus
-        ? _todosRef
+        ? await _todosRef
             .doc(id)
             .update({"isCompleted": isCompleted})
             .then((value) => debugPrint("Task status updated."))
@@ -65,14 +74,34 @@ class DatabaseService {
             .catchError((error) => debugPrint("Fail update status."));
   }
 
+  Future<void> addUser(String name, String occupation) async {
+    await _userRef
+        .doc(uid)
+        .set(UserData(
+          name: name,
+          uid: uid,
+          occupation: occupation,
+        ))
+        .then((value) => debugPrint("New User Added"))
+        .catchError((error) => debugPrint("Fail to add new user."));
+  }
+
   Stream<QuerySnapshot<ToDo>> fetchTodoListByStatus(String status) {
     switch (status) {
       case "Completed":
-        return _todosRef.where("isCompleted", isEqualTo: true).orderBy("createdOn").snapshots();
+        return _todosRef
+            .where("isCompleted", isEqualTo: true)
+            .where("uid", isEqualTo: uid)
+            .orderBy("createdOn")
+            .snapshots();
       case "Active":
-        return _todosRef.where("isCompleted", isEqualTo: false).orderBy("createdOn").snapshots();
+        return _todosRef
+            .where("isCompleted", isEqualTo: false)
+            .where("uid", isEqualTo: uid)
+            .orderBy("createdOn")
+            .snapshots();
       default:
-        return _todosRef.orderBy("createdOn").snapshots();
+        return _todosRef.where("uid", isEqualTo: uid).orderBy("createdOn").snapshots();
     }
   }
 
@@ -86,5 +115,9 @@ class DatabaseService {
 
   Stream<DocumentSnapshot<Tag>> fetchTag(String id) {
     return _tagRef.doc(id).snapshots();
+  }
+
+  Future<DocumentSnapshot<UserData>> fetchUser() {
+    return _userRef.doc(uid).get();
   }
 }

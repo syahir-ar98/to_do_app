@@ -163,7 +163,7 @@ class ToDoCard extends ConsumerWidget {
                           ),
                         ),
                         onTap: () {
-                          ref.read(firestoreServiceProvider).deleteTodo(id);
+                          ref.read(dataServiceProvider).deleteTodo(id);
                           debugPrint("Task $title deleted.");
                         },
                       ),

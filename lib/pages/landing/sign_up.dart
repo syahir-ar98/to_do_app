@@ -1,15 +1,25 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:to_do_app/components/dropdown_tag.dart';
 import 'package:to_do_app/pages/home/home.dart';
 import 'package:to_do_app/services/controller.dart';
 import 'package:to_do_app/services/providers.dart';
 
-class SignUp extends ConsumerWidget {
+final dropdownOccupationKey = GlobalKey<FormState>();
+
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpState();
+}
+
+class _SignUpState extends ConsumerState<SignUp> {
+  @override
+  Widget build(BuildContext context) {
+    String? occupationValue;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 120.0),
       color: const Color(0xFFFFFFFF),
@@ -61,31 +71,108 @@ class SignUp extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 40.0),
-          TextFormField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            cursorColor: const Color(0xFF00897B),
-            cursorWidth: 2.0,
-            cursorHeight: 22.0,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xFFDCDCDC)),
-                borderRadius: BorderRadius.circular(8.0),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: TextFormField(
+              controller: nameController,
+              keyboardType: TextInputType.emailAddress,
+              cursorColor: const Color(0xFF00897B),
+              cursorWidth: 2.0,
+              cursorHeight: 22.0,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFFDCDCDC)),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                labelText: "Name",
+                labelStyle: GoogleFonts.inter(
+                  color: const Color(0xFFA9A9A9),
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
-              labelText: "Email Address",
-              labelStyle: GoogleFonts.inter(
-                color: const Color(0xFFA9A9A9),
-                fontSize: 14.0,
-                fontWeight: FontWeight.w600,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
-                borderRadius: BorderRadius.circular(8.0),
+              style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+            ),
+          ),
+          Form(
+            key: dropdownOccupationKey,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: DropdownButtonFormField<String>(
+                icon: const Icon(EvaIcons.chevronDownOutline, size: 24.0),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFFDCDCDC)),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                hint: Text(
+                  "Select an occupation",
+                  style: GoogleFonts.inter(
+                    color: const Color(0xFFA9A9A9),
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                value: occupationValue,
+                items: <String>['Student', 'Teacher', 'Developer'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    occupationValue = value;
+                    occupationController.text = occupationValue!;
+                    debugPrint("occupationValue:$occupationValue");
+                    debugPrint("occupationController:${occupationController.text}");
+                  });
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return "Please choose a tag";
+                  }
+                  return null;
+                },
               ),
             ),
-            style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: TextFormField(
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+              cursorColor: const Color(0xFF00897B),
+              cursorWidth: 2.0,
+              cursorHeight: 22.0,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFFDCDCDC)),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                labelText: "Email Address",
+                labelStyle: GoogleFonts.inter(
+                  color: const Color(0xFFA9A9A9),
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w600,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+            ),
+          ),
           TextFormField(
             controller: passwordController,
             cursorColor: const Color(0xFF00897B),
@@ -115,10 +202,21 @@ class SignUp extends ConsumerWidget {
             width: double.maxFinite,
             child: TextButton(
               onPressed: () {
-                ref.watch(firebaseAuthServiceProvider).signUp(
-                      emailController.text,
-                      passwordController.text,
-                    );
+                if (dropdownOccupationKey.currentState!.validate()) {
+                  debugPrint("name:${nameController.text}");
+                  debugPrint("occ:${occupationController.text}");
+                  debugPrint("email:${emailController.text}");
+                  debugPrint("pass:${passwordController.text}");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Creating Account.')),
+                  );
+                  ref.watch(authServiceProvider).signUp(
+                        nameController.text,
+                        occupationController.text,
+                        emailController.text,
+                        passwordController.text,
+                      );
+                }
               },
               child: Text(
                 "SIGN UP",

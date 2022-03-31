@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/services/firestore_database.dart';
 
 /// Task 3: Login
 
@@ -30,12 +31,13 @@ class AuthenticationService {
     return "Empty";
   }
 
-  Future<String> signUp(String email, String password) async {
+  Future<String> signUp(String name, String occupation, String email, String password) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final _result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      DatabaseService(uid: _result.user!.uid).addUser(name, occupation);
       return "Successfully Signed Up";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

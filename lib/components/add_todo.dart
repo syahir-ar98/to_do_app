@@ -137,8 +137,8 @@ class AddTodo extends ConsumerWidget {
                               ),
                             ),
                             onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                ref.read(firestoreServiceProvider).addTodo(
+                              if (dropdownTagKey.currentState!.validate()) {
+                                ref.read(dataServiceProvider).addTodo(
                                       titleController.text,
                                       descController.text,
                                       tagController.text,
