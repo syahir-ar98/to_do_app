@@ -23,5 +23,5 @@ Tasks Completion by Krenovator TSA
 - [x] Task 5: Push Project
 - [x] Task 6: Deployment
 
-Development Status: COMPLETED
+Development Status: COMPLETED  
 Project Demo: [Link](https://to-do-app-cd34b.web.app/)
