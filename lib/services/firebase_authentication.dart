@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/services/firestore_database.dart';
 
 /// Task 3: Login
-
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
   AuthenticationService(this._firebaseAuth);

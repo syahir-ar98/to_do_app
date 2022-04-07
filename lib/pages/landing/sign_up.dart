@@ -91,11 +91,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                   fontWeight: FontWeight.w600,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF00897B), width: 2.0),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+              style: GoogleFonts.inter(
+                  fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
           ),
           Form(
@@ -110,7 +112,8 @@ class _SignUpState extends ConsumerState<SignUp> {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                    borderSide:
+                        const BorderSide(color: Color(0xFF00897B), width: 2.0),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
@@ -123,7 +126,8 @@ class _SignUpState extends ConsumerState<SignUp> {
                   ),
                 ),
                 value: occupationValue,
-                items: <String>['Student', 'Teacher', 'Developer'].map<DropdownMenuItem<String>>((String value) {
+                items: <String>['Student', 'Teacher', 'Developer']
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -134,7 +138,8 @@ class _SignUpState extends ConsumerState<SignUp> {
                     occupationValue = value;
                     occupationController.text = occupationValue!;
                     debugPrint("occupationValue:$occupationValue");
-                    debugPrint("occupationController:${occupationController.text}");
+                    debugPrint(
+                        "occupationController:${occupationController.text}");
                   });
                 },
                 validator: (value) {
@@ -166,11 +171,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                   fontWeight: FontWeight.w600,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF00897B), width: 2.0),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+              style: GoogleFonts.inter(
+                  fontSize: 16.0, fontWeight: FontWeight.w500),
             ),
           ),
           TextFormField(
@@ -190,11 +197,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                 fontWeight: FontWeight.w600,
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                borderSide:
+                    const BorderSide(color: Color(0xFF00897B), width: 2.0),
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-            style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+            style:
+                GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 30.0),
           SizedBox(
@@ -227,8 +236,10 @@ class _SignUpState extends ConsumerState<SignUp> {
                 ),
               ),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(const Color(0xFF00897B)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFF00897B)),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0))),
               ),
             ),
           )

@@ -66,11 +66,13 @@ class EditTodo extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF00897B), width: 2.0),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.inter(
+                      fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
               Padding(
@@ -92,11 +94,13 @@ class EditTodo extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF00897B), width: 2.0),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.inter(
+                      fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
               EditDropdownTag(tag: tag),
@@ -153,9 +157,11 @@ class EditTodo extends ConsumerWidget {
                           ),
                         ),
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(const Color(0xFF00897B)),
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFF00897B)),
                           shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0))),
                         ),
                       ),
                     ),

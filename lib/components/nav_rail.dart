@@ -11,7 +11,8 @@ class CustomNavigationRail extends ConsumerStatefulWidget {
   const CustomNavigationRail({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CustomNavigationRailState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CustomNavigationRailState();
 }
 
 List<String> listMenu = [
@@ -29,13 +30,15 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
   Widget build(BuildContext context) {
     debugPrint("NavRail build");
     return Container(
-      padding: const EdgeInsets.only(top: 32.0, bottom: 32.0, right: 8.0, left: 24.0),
+      padding: const EdgeInsets.only(
+          top: 32.0, bottom: 32.0, right: 8.0, left: 24.0),
       decoration: const BoxDecoration(
         border: Border(right: BorderSide(color: Color(0xFFF5F5F5))),
         color: Color(0xFFFFFFFF),
       ),
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 256, maxHeight: MediaQuery.of(context).size.height),
+        constraints: BoxConstraints(
+            maxWidth: 256, maxHeight: MediaQuery.of(context).size.height),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -69,11 +72,18 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
                   const SizedBox(width: 16.0),
                   RichText(
                     text: TextSpan(
-                      style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 18.0),
+                      style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w800, fontSize: 18.0),
                       children: const [
-                        TextSpan(text: "To-Do ", style: TextStyle(color: Color(0xFF004D40))),
-                        TextSpan(text: "App", style: TextStyle(color: Color(0xFF00BFA5))),
-                        TextSpan(text: ".", style: TextStyle(color: Color(0xFFC4421A))),
+                        TextSpan(
+                            text: "To-Do ",
+                            style: TextStyle(color: Color(0xFF004D40))),
+                        TextSpan(
+                            text: "App",
+                            style: TextStyle(color: Color(0xFF00BFA5))),
+                        TextSpan(
+                            text: ".",
+                            style: TextStyle(color: Color(0xFFC4421A))),
                       ],
                     ),
                   ),
@@ -185,17 +195,17 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
                       },
                     ),
                   ),
-                  const Spacer(),
-                  Container(
-                    width: 40.0,
-                    height: 40.0,
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      EvaIcons.moreVertical,
-                      color: Color(0xFF00695C),
-                      size: 24.0,
-                    ),
-                  )
+                  // const Spacer(),
+                  // Container(
+                  //   width: 40.0,
+                  //   height: 40.0,
+                  //   alignment: Alignment.center,
+                  //   child: const Icon(
+                  //     EvaIcons.moreVertical,
+                  //     color: Color(0xFF00695C),
+                  //     size: 24.0,
+                  //   ),
+                  // )
                 ],
               ),
             )

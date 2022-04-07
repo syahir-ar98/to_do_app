@@ -19,7 +19,8 @@ class OverviewDesktop extends ConsumerWidget {
         // Header
         Container(
           width: double.maxFinite,
-          padding: const EdgeInsets.only(left: 32.0, right: 32.0, top: 32.0, bottom: 24.0),
+          padding: const EdgeInsets.only(
+              left: 32.0, right: 32.0, top: 32.0, bottom: 24.0),
           color: const Color(0xFFFFFFFF),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +39,8 @@ class OverviewDesktop extends ConsumerWidget {
         // Content
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(left: 32.0, right: 32.0, top: 24.0, bottom: 32.0),
+            padding: const EdgeInsets.only(
+                left: 32.0, right: 32.0, top: 24.0, bottom: 32.0),
             color: const Color(0xFFF5F5F5),
             child: Row(
               children: [
@@ -181,7 +183,8 @@ class OverviewDesktop extends ConsumerWidget {
                 Expanded(
                   child: Container(
                     height: double.maxFinite,
-                    padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 56.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 24.0, horizontal: 56.0),
                     decoration: BoxDecoration(
                       color: const Color(0xFFFFFFFF),
                       borderRadius: BorderRadius.circular(8.0),
@@ -217,7 +220,8 @@ class OverviewDesktop extends ConsumerWidget {
                                   );
                                 },
                                 error: (e, st) => Text("Error: $e"),
-                                loading: () => const Center(child: CircularProgressIndicator()),
+                                loading: () => const Center(
+                                    child: CircularProgressIndicator()),
                               );
                             },
                           ),
@@ -226,7 +230,8 @@ class OverviewDesktop extends ConsumerWidget {
                           padding: const EdgeInsets.only(bottom: 48.0),
                           child: Container(
                             height: 2.0,
-                            decoration: const BoxDecoration(color: Color(0xFFDCDCDC)),
+                            decoration:
+                                const BoxDecoration(color: Color(0xFFDCDCDC)),
                           ),
                         ),
                         MouseRegion(
@@ -235,7 +240,8 @@ class OverviewDesktop extends ConsumerWidget {
                             behavior: HitTestBehavior.translucent,
                             child: Container(
                               height: 48.0,
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFDC59F),
                                 borderRadius: BorderRadius.circular(8.0),

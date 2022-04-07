@@ -55,11 +55,13 @@ class AddTodo extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF00897B), width: 2.0),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.inter(
+                      fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
               Padding(
@@ -81,11 +83,13 @@ class AddTodo extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF00897B), width: 2.0),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  style: GoogleFonts.inter(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.inter(
+                      fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
               ),
               const DropdownTag(),
@@ -149,7 +153,8 @@ class AddTodo extends ConsumerWidget {
                                     backgroundColor: const Color(0xFFA7FFEB),
                                     behavior: SnackBarBehavior.floating,
                                     content: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Padding(
                                           padding: EdgeInsets.only(right: 16.0),
@@ -169,8 +174,11 @@ class AddTodo extends ConsumerWidget {
                                         ),
                                       ],
                                     ),
-                                    duration: const Duration(milliseconds: 2000),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                                    duration:
+                                        const Duration(milliseconds: 2000),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0)),
                                   ),
                                 );
                                 titleController.clear();
@@ -180,9 +188,12 @@ class AddTodo extends ConsumerWidget {
                               }
                             },
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(const Color(0xFF00897B)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color(0xFF00897B)),
                               shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(8.0))),
                             ),
                           );
                         },

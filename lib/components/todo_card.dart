@@ -104,7 +104,7 @@ class ToDoCard extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Edit task
+                  // Edit Task Button
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: Tooltip(
@@ -132,7 +132,11 @@ class ToDoCard extends ConsumerWidget {
                             showDialog(
                                 context: context,
                                 builder: (_) {
-                                  return EditTodo(id: id, title: title, description: description, tag: tagName);
+                                  return EditTodo(
+                                      id: id,
+                                      title: title,
+                                      description: description,
+                                      tag: tagName);
                                 });
                             debugPrint("Edit task clicked.");
                           },
@@ -140,7 +144,7 @@ class ToDoCard extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  // Delete task
+                  // Delete Task Button
                   Tooltip(
                     message: "Delete Task",
                     preferBelow: false,
@@ -192,7 +196,8 @@ class ToDoCard extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     decoration: BoxDecoration(
                       color: tag!.getBgColor,
                       borderRadius: BorderRadius.circular(20.0),
@@ -219,7 +224,8 @@ class ToDoCard extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Container(
                   width: 100.0,
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF5F5F5),
                     borderRadius: BorderRadius.circular(20.0),

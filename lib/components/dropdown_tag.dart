@@ -35,7 +35,8 @@ class _DropdownTagState extends ConsumerState<DropdownTag> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xFF00897B), width: 2.0),
+                borderSide:
+                    const BorderSide(color: Color(0xFF00897B), width: 2.0),
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),

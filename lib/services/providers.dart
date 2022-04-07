@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_do_app/models/user.dart';
 import 'package:to_do_app/services/firebase_authentication.dart';
@@ -31,13 +33,15 @@ final dataServiceProvider = Provider((ref) {
   return DatabaseService(uid: _userId);
 });
 
-/// Fetching To-Dos By Status (All, Completed, Active)
-final todoListByStatusProvider = StreamProvider.family.autoDispose<QuerySnapshot<ToDo>, String>((ref, status) {
+/// Fetching To-Dos By Status [All, Completed, Active]
+final todoListByStatusProvider = StreamProvider.family
+    .autoDispose<QuerySnapshot<ToDo>, String>((ref, status) {
   return ref.watch(dataServiceProvider).fetchTodoListByStatus(status);
 });
 
 ///Fetch Todo List By Tag [tagName]
-final todoListByTagProvider = StreamProvider.autoDispose.family<QuerySnapshot<ToDo>, String>((ref, tag) {
+final todoListByTagProvider =
+    StreamProvider.autoDispose.family<QuerySnapshot<ToDo>, String>((ref, tag) {
   return ref.watch(dataServiceProvider).fetchTodoListByTag(tag);
 });
 
@@ -47,7 +51,22 @@ final tagsListProvider = StreamProvider<QuerySnapshot<Tag>>((ref) {
 });
 
 ///Fetch Specific Tag
-final specificTagProvider = StreamProvider.autoDispose.family<DocumentSnapshot<Tag>, String>((ref, id) {
+final specificTagProvider =
+    StreamProvider.autoDispose.family<DocumentSnapshot<Tag>, String>((ref, id) {
+  // List<Tag> listTags = [];
+  // ref.watch(tagsListProvider).when(
+  //       data: (data) {
+  //         for (int i = 0; i < data.docs.length; i++) {
+  //           listTags.add(data.docs[i].data());
+  //         }
+  //       },
+  //       error: (e, st) => print('Error $e'),
+  //       loading: () => const CircularProgressIndicator(),
+  //     );
+
+  // for (int i = 0; i < listTags.length; i++) {
+  //   debugPrint('listTags: ${listTags[i]}');
+  // }
   return ref.watch(dataServiceProvider).fetchTag(id);
 });
 

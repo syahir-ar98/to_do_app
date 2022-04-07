@@ -24,7 +24,8 @@ class TagsContent extends ConsumerWidget {
             return DataRow(cells: <DataCell>[
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
                   decoration: BoxDecoration(
                     color: tag.getBgColor,
                     borderRadius: BorderRadius.circular(16.0),
@@ -43,7 +44,8 @@ class TagsContent extends ConsumerWidget {
                   data: (data) {
                     return DataCell(
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
                         child: Text(
                           data.docs.length.toString(),
                           style: GoogleFonts.inter(
@@ -56,7 +58,8 @@ class TagsContent extends ConsumerWidget {
                     );
                   },
                   error: (e, st) => DataCell(Text("Error $e")),
-                  loading: () => const DataCell(Center(child: CircularProgressIndicator())))
+                  loading: () => const DataCell(
+                      Center(child: CircularProgressIndicator())))
             ]);
           }),
         );

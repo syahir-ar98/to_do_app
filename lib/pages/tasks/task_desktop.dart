@@ -88,27 +88,37 @@ class TaskDesktop extends ConsumerWidget {
                   children: List.generate(listStatus.length, (index) {
                     return Consumer(
                       builder: (_, ref, __) {
-                        final _state = ref.watch(stateFilterProvider(listStatus[index]));
+                        final _state =
+                            ref.watch(stateFilterProvider(listStatus[index]));
                         return Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: GestureDetector(
                               onTap: () {
-                                ref.read(currentFilterProvider.state).state = listStatus[index];
+                                ref.read(currentFilterProvider.state).state =
+                                    listStatus[index];
                               },
                               behavior: HitTestBehavior.translucent,
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0, horizontal: 16.0),
                                 decoration: BoxDecoration(
-                                  color: _state ? const Color(0xFFA7FFEB) : const Color(0xFFF5F5F5),
+                                  color: _state
+                                      ? const Color(0xFFA7FFEB)
+                                      : const Color(0xFFF5F5F5),
                                   borderRadius: BorderRadius.circular(25.0),
-                                  border: Border.all(color: _state ? Colors.transparent : const Color(0xFF808080)),
+                                  border: Border.all(
+                                      color: _state
+                                          ? Colors.transparent
+                                          : const Color(0xFF808080)),
                                 ),
                                 child: Text(
                                   listStatus[index],
                                   style: GoogleFonts.inter(
-                                    color: _state ? const Color(0xFF13A97D) : const Color(0xFF808080),
+                                    color: _state
+                                        ? const Color(0xFF13A97D)
+                                        : const Color(0xFF808080),
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -128,31 +138,41 @@ class TaskDesktop extends ConsumerWidget {
             Consumer(
               builder: (_, ref, __) {
                 final filter = ref.watch(currentFilterProvider);
-                final asyncValue = ref.watch(todoListByStatusProvider(filter));
-                return asyncValue.when(
-                  data: (data) => ListView.builder(
-                    controller: ScrollController(),
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.docs.length,
-                    itemBuilder: (context, index) {
-                      final document = data.docs[index];
-                      final todo = document.data();
-                      return ToDoCard(
-                        id: document.id,
-                        title: todo.title,
-                        description: todo.description,
-                        tagName: todo.tag,
-                        isCompleted: todo.isCompleted,
-                        createdOn: todo.createdOn,
-                      );
-                    },
-                  ),
+                final asyncValueToDo =
+                    ref.watch(todoListByStatusProvider(filter));
+                return asyncValueToDo.when(
+                  data: (data) {
+                    return data.docs.isNotEmpty
+                        ? ListView.builder(
+                            controller: ScrollController(),
+                            physics: const ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: data.docs.length,
+                            itemBuilder: (context, index) {
+                              final document = data.docs[index];
+                              final todo = document.data();
+                              return ToDoCard(
+                                id: document.id,
+                                title: todo.title,
+                                description: todo.description,
+                                tagName: todo.tag,
+                                isCompleted: todo.isCompleted,
+                                createdOn: todo.createdOn,
+                              );
+                            },
+                          )
+                        : const Expanded(
+                            child: Center(
+                              child: Text('No Task Available'),
+                            ),
+                          );
+                  },
                   error: (e, st) {
                     debugPrint("Error: $e");
                     return Text("Error: $e");
                   },
-                  loading: () => const Expanded(child: Center(child: CircularProgressIndicator())),
+                  loading: () => const Expanded(
+                      child: Center(child: CircularProgressIndicator())),
                 );
               },
             ),
