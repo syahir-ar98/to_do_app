@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_app/components/add_todo.dart';
 import 'package:to_do_app/components/todo_card.dart';
+import 'package:to_do_app/models/todo.dart';
 import 'package:to_do_app/pages/home/home.dart';
 import 'package:to_do_app/services/providers.dart';
 
@@ -137,22 +138,29 @@ class TaskDesktop extends ConsumerWidget {
             // List of ToDo
             Consumer(
               builder: (_, ref, __) {
-                final filter = ref.watch(currentFilterProvider);
-                final asyncValueToDo =
-                    ref.watch(todoListByStatusProvider(filter));
-                return asyncValueToDo.when(
+                final asyncTodos = ref.watch(filteredTodoListProvider);
+                // return ListView.builder(itemBuilder: (context, index) {
+                //   final todo = todos[index];
+                //   return ToDoCard(
+                //       id: todo.id,
+                //       title: todo.title,
+                //       description: todo.description,
+                //       tagName: todo.tag,
+                //       isCompleted: todo.isCompleted,
+                //       createdOn: todo.createdOn);
+                // });
+                return asyncTodos.when(
                   data: (data) {
-                    return data.docs.isNotEmpty
+                    return data.isNotEmpty
                         ? ListView.builder(
                             controller: ScrollController(),
                             physics: const ClampingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: data.docs.length,
+                            itemCount: data.length,
                             itemBuilder: (context, index) {
-                              final document = data.docs[index];
-                              final todo = document.data();
+                              final todo = data[index];
                               return ToDoCard(
-                                id: document.id,
+                                id: todo.id,
                                 title: todo.title,
                                 description: todo.description,
                                 tagName: todo.tag,
@@ -167,10 +175,7 @@ class TaskDesktop extends ConsumerWidget {
                             ),
                           );
                   },
-                  error: (e, st) {
-                    debugPrint("Error: $e");
-                    return Text("Error: $e");
-                  },
+                  error: (e, st) => Text("Error: $e"),
                   loading: () => const Expanded(
                       child: Center(child: CircularProgressIndicator())),
                 );

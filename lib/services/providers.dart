@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_do_app/models/user.dart';
@@ -34,9 +33,61 @@ final dataServiceProvider = Provider((ref) {
 });
 
 /// Fetching To-Dos By Status [All, Completed, Active]
-final todoListByStatusProvider = StreamProvider.family
-    .autoDispose<QuerySnapshot<ToDo>, String>((ref, status) {
-  return ref.watch(dataServiceProvider).fetchTodoListByStatus(status);
+
+final todosProvider = StreamProvider<QuerySnapshot<ToDo>>((ref) {
+  return ref.watch(dataServiceProvider).fetchTodoList();
+});
+
+final filteredTodoListProvider = FutureProvider<List<ToDo>>((ref) {
+  final filter = ref.watch(currentFilterProvider);
+  final asyncTodos = ref.watch(todosProvider);
+
+  final List<ToDo> todos = asyncTodos.when(
+    data: (data) {
+      List<ToDo> list = [];
+      for (int i = 0; i < data.docs.length; i++) {
+        list.add(data.docs[i].data());
+      }
+      return list;
+    },
+    error: (e, st) => [],
+    loading: () => [],
+  );
+
+  switch (filter) {
+    case "Completed":
+      return todos.where((todo) => todo.isCompleted == true).toList();
+    case "Active":
+      return todos.where((todo) => todo.isCompleted == false).toList();
+    default:
+      return todos;
+  }
+});
+
+final countFilteredTodoListProvider =
+    FutureProvider.family<int, String>((ref, filter) {
+  final asyncTodos = ref.watch(todosProvider);
+
+  final List<ToDo> todos = asyncTodos.when(
+    data: (data) {
+      List<ToDo> list = [];
+      for (int i = 0; i < data.docs.length; i++) {
+        list.add(data.docs[i].data());
+      }
+      return list;
+    },
+    error: (e, st) => [],
+    loading: () => [],
+  );
+
+  switch (filter) {
+    case "Completed":
+      return todos.where((todo) => todo.isCompleted == true).toList().length;
+    case "Active":
+      return todos.where((todo) => todo.isCompleted == false).toList().length;
+    default:
+      return todos.length;
+  }
 });
 
 ///Fetch Todo List By Tag [tagName]

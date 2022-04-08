@@ -56,7 +56,8 @@ class DatabaseService {
         .catchError((error) => debugPrint("Failed to delete task."));
   }
 
-  Future<void> updateTodo(String id, bool isUpdatingStatus, {bool? isCompleted}) async {
+  Future<void> updateTodo(String id, bool isUpdatingStatus,
+      {bool? isCompleted}) async {
     isUpdatingStatus
         ? await _todosRef
             .doc(id)
@@ -86,23 +87,11 @@ class DatabaseService {
         .catchError((error) => debugPrint("Fail to add new user."));
   }
 
-  Stream<QuerySnapshot<ToDo>> fetchTodoListByStatus(String status) {
-    switch (status) {
-      case "Completed":
-        return _todosRef
-            .where("isCompleted", isEqualTo: true)
-            .where("uid", isEqualTo: uid)
-            .orderBy("createdOn")
-            .snapshots();
-      case "Active":
-        return _todosRef
-            .where("isCompleted", isEqualTo: false)
-            .where("uid", isEqualTo: uid)
-            .orderBy("createdOn")
-            .snapshots();
-      default:
-        return _todosRef.where("uid", isEqualTo: uid).orderBy("createdOn").snapshots();
-    }
+  Stream<QuerySnapshot<ToDo>> fetchTodoList() {
+    return _todosRef
+        .where("uid", isEqualTo: uid)
+        .orderBy("createdOn")
+        .snapshots();
   }
 
   Stream<QuerySnapshot<ToDo>> fetchTodoListByTag(String tag) {
