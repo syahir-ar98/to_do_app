@@ -116,24 +116,23 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
               ),
             ),
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: NavigationRailButton(
-                text: "Sign Out",
-                icon: EvaIcons.logOutOutline,
-                logic: () {
-                  ref.read(currentMenuProvider.state).state = "Overview";
-                  ref.read(authServiceProvider).signOut();
-                  emailController.clear();
-                  passwordController.clear();
-                },
-              ),
+            NavigationRailButton(
+              text: "Sign Out",
+              icon: EvaIcons.logOutOutline,
+              logic: () {
+                ref.read(currentMenuProvider.state).state = "Overview";
+                ref.read(authServiceProvider).signOut();
+                emailController.clear();
+                passwordController.clear();
+              },
             ),
-            Container(
+            Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              width: double.maxFinite,
-              height: 1.0,
-              color: const Color(0xFFEEEEEE),
+              child: Container(
+                width: double.maxFinite,
+                height: 1.0,
+                color: const Color(0xFFEEEEEE),
+              ),
             ),
             Container(
               width: double.maxFinite,

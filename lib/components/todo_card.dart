@@ -185,10 +185,9 @@ class ToDoCard extends ConsumerWidget {
   Widget _buildTag() {
     return Consumer(
       builder: (_, ref, __) {
-        final tagDoc = ref.watch(specificTagProvider(tagName));
-        return tagDoc.when(
-          data: (data) {
-            final tag = data.data();
+        final asyncTag = ref.watch(specificTagProvider(tagName));
+        return asyncTag.when(
+          data: (tag) {
             return Expanded(
               flex: 1,
               child: Padding(
@@ -199,7 +198,7 @@ class ToDoCard extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 16.0),
                     decoration: BoxDecoration(
-                      color: tag!.getBgColor,
+                      color: tag.getBgColor,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Text(

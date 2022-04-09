@@ -17,7 +17,7 @@ class DropdownTag extends ConsumerStatefulWidget {
 class _DropdownTagState extends ConsumerState<DropdownTag> {
   @override
   Widget build(BuildContext context) {
-    final tagListAsyncValue = ref.watch(tagsListProvider);
+    final tagListAsyncValue = ref.watch(tagsProvider);
     return Form(
       key: dropdownTagKey,
       child: tagListAsyncValue.when(

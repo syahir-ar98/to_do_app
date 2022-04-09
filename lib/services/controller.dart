@@ -6,6 +6,10 @@ TextEditingController descController = TextEditingController();
 
 TextEditingController tagController = TextEditingController();
 
+TextEditingController tagBgColorController = TextEditingController();
+
+TextEditingController tagTextColorController = TextEditingController();
+
 TextEditingController emailController = TextEditingController();
 
 TextEditingController passwordController = TextEditingController();

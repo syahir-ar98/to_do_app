@@ -14,17 +14,17 @@ class DatabaseService {
   final String uid;
   DatabaseService({required this.uid});
 
-  static final _todosRef = _firestore.collection("todos").withConverter(
+  final _todosRef = _firestore.collection("todos").withConverter(
         fromFirestore: (snapshot, _) => ToDo.fromJson(snapshot.data()!),
         toFirestore: (todo, _) => todo.toJson(),
       );
 
-  static final _tagRef = _firestore.collection("tags").withConverter(
+  final _tagRef = _firestore.collection("tags").withConverter(
         fromFirestore: (snapshot, _) => Tag.fromJson(snapshot.data()!),
         toFirestore: (tag, _) => tag.toJson(),
       );
 
-  static final _userRef = _firestore.collection("users").withConverter(
+  final _userRef = _firestore.collection("users").withConverter(
         fromFirestore: (snapshot, _) => UserData.fromJson(snapshot.data()!),
         toFirestore: (user, _) => user.toJson(),
       );
@@ -75,6 +75,31 @@ class DatabaseService {
             .catchError((error) => debugPrint("Fail update status."));
   }
 
+  Stream<QuerySnapshot<ToDo>> fetchTodoList() {
+    return _todosRef
+        .where("uid", isEqualTo: uid)
+        .orderBy("createdOn")
+        .snapshots();
+  }
+
+  Future<void> addTag() async {
+    final _tagId = _tagRef.doc().id;
+    await _tagRef
+        .doc(_tagId)
+        .set(Tag(
+          tagName: tagController.text,
+          bgColor: tagBgColorController.text,
+          textColor: tagTextColorController.text,
+          uid: uid,
+        ))
+        .then((value) => print("Tag [${tagController.text}] Added"))
+        .catchError((error) => print("Fail adding tag"));
+  }
+
+  Stream<QuerySnapshot<Tag>> fetchTagList() {
+    return _tagRef.snapshots();
+  }
+
   Future<void> addUser(String name, String occupation) async {
     await _userRef
         .doc(uid)
@@ -85,25 +110,6 @@ class DatabaseService {
         ))
         .then((value) => debugPrint("New User Added"))
         .catchError((error) => debugPrint("Fail to add new user."));
-  }
-
-  Stream<QuerySnapshot<ToDo>> fetchTodoList() {
-    return _todosRef
-        .where("uid", isEqualTo: uid)
-        .orderBy("createdOn")
-        .snapshots();
-  }
-
-  Stream<QuerySnapshot<ToDo>> fetchTodoListByTag(String tag) {
-    return _todosRef.where("tag", isEqualTo: tag).snapshots();
-  }
-
-  Stream<QuerySnapshot<Tag>> fetchTagsList() {
-    return _tagRef.snapshots();
-  }
-
-  Stream<DocumentSnapshot<Tag>> fetchTag(String id) {
-    return _tagRef.doc(id).snapshots();
   }
 
   Future<DocumentSnapshot<UserData>> fetchUser() {

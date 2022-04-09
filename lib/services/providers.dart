@@ -32,94 +32,81 @@ final dataServiceProvider = Provider((ref) {
   return DatabaseService(uid: _userId);
 });
 
-/// Fetching To-Dos By Status [All, Completed, Active]
-
+/// Fetching All Todos
 final todosProvider = StreamProvider<QuerySnapshot<ToDo>>((ref) {
   return ref.watch(dataServiceProvider).fetchTodoList();
 });
 
-final filteredTodoListProvider = FutureProvider<List<ToDo>>((ref) {
-  final filter = ref.watch(currentFilterProvider);
-  final asyncTodos = ref.watch(todosProvider);
+/// Fetching Filtered Todos
+final filteredTodosProvider = FutureProvider.family<List<ToDo>, String>(
+  (ref, filter) {
+    final asyncTodos = ref.watch(todosProvider);
+    final List<ToDo> todos = asyncTodos.when(
+      data: (data) {
+        List<ToDo> list = [];
+        for (int i = 0; i < data.docs.length; i++) {
+          list.add(data.docs[i].data());
+        }
+        return list;
+      },
+      error: (e, st) => [],
+      loading: () => [],
+    );
 
-  final List<ToDo> todos = asyncTodos.when(
-    data: (data) {
-      List<ToDo> list = [];
-      for (int i = 0; i < data.docs.length; i++) {
-        list.add(data.docs[i].data());
-      }
-      return list;
-    },
-    error: (e, st) => [],
-    loading: () => [],
-  );
-
-  switch (filter) {
-    case "Completed":
-      return todos.where((todo) => todo.isCompleted == true).toList();
-    case "Active":
-      return todos.where((todo) => todo.isCompleted == false).toList();
-    default:
-      return todos;
-  }
-});
-
-final countFilteredTodoListProvider =
-    FutureProvider.family<int, String>((ref, filter) {
-  final asyncTodos = ref.watch(todosProvider);
-
-  final List<ToDo> todos = asyncTodos.when(
-    data: (data) {
-      List<ToDo> list = [];
-      for (int i = 0; i < data.docs.length; i++) {
-        list.add(data.docs[i].data());
-      }
-      return list;
-    },
-    error: (e, st) => [],
-    loading: () => [],
-  );
-
-  switch (filter) {
-    case "Completed":
-      return todos.where((todo) => todo.isCompleted == true).toList().length;
-    case "Active":
-      return todos.where((todo) => todo.isCompleted == false).toList().length;
-    default:
-      return todos.length;
-  }
-});
+    switch (filter) {
+      case "Completed":
+        return todos.where((todo) => todo.isCompleted == true).toList();
+      case "Active":
+        return todos.where((todo) => todo.isCompleted == false).toList();
+      default:
+        return todos;
+    }
+  },
+);
 
 ///Fetch Todo List By Tag [tagName]
-final todoListByTagProvider =
-    StreamProvider.autoDispose.family<QuerySnapshot<ToDo>, String>((ref, tag) {
-  return ref.watch(dataServiceProvider).fetchTodoListByTag(tag);
+final todosByTagProvider =
+    FutureProvider.autoDispose.family<List<ToDo>, String>(
+  (ref, tag) {
+    final asyncTodo = ref.watch(todosProvider);
+    final List<ToDo> todos = asyncTodo.when(
+      data: (data) {
+        List<ToDo> list = [];
+        for (int i = 0; i < data.docs.length; i++) {
+          list.add(data.docs[i].data());
+        }
+        return list;
+      },
+      error: (e, st) => [],
+      loading: () => [],
+    );
+
+    return todos.where((todo) => todo.tag == tag).toList();
+  },
+);
+
+/// Fetching All Tags
+final tagsProvider = StreamProvider<QuerySnapshot<Tag>>((ref) {
+  return ref.watch(dataServiceProvider).fetchTagList();
 });
 
-///Fetch All Tags
-final tagsListProvider = StreamProvider<QuerySnapshot<Tag>>((ref) {
-  return ref.watch(dataServiceProvider).fetchTagsList();
-});
-
-///Fetch Specific Tag
-final specificTagProvider =
-    StreamProvider.autoDispose.family<DocumentSnapshot<Tag>, String>((ref, id) {
-  // List<Tag> listTags = [];
-  // ref.watch(tagsListProvider).when(
-  //       data: (data) {
-  //         for (int i = 0; i < data.docs.length; i++) {
-  //           listTags.add(data.docs[i].data());
-  //         }
-  //       },
-  //       error: (e, st) => print('Error $e'),
-  //       loading: () => const CircularProgressIndicator(),
-  //     );
-
-  // for (int i = 0; i < listTags.length; i++) {
-  //   debugPrint('listTags: ${listTags[i]}');
-  // }
-  return ref.watch(dataServiceProvider).fetchTag(id);
-});
+/// Fetching Single Tag
+final specificTagProvider = FutureProvider.autoDispose.family<Tag, String>(
+  (ref, name) {
+    List<Tag> tags = [];
+    final asyncTags = ref.watch(tagsProvider);
+    asyncTags.when(
+      data: (data) {
+        for (int i = 0; i < data.docs.length; i++) {
+          tags.add(data.docs[i].data());
+        }
+      },
+      error: (e, st) => print('Error $e'),
+      loading: () => const CircularProgressIndicator(),
+    );
+    return tags.singleWhere((tag) => tag.tagName == name);
+  },
+);
 
 // FirebaseAuth Providers
 final authProvider = Provider<FirebaseAuth>((ref) {

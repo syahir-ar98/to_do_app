@@ -13,8 +13,8 @@ class SummaryContent extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(listStatus.length, (index) {
-          final _count =
-              ref.watch(countFilteredTodoListProvider(listStatus[index]));
+          final asyncTodos =
+              ref.watch(filteredTodosProvider(listStatus[index]));
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -22,10 +22,10 @@ class SummaryContent extends ConsumerWidget {
                 width: 70.0,
                 height: 70.0,
                 alignment: Alignment.center,
-                child: _count.when(
+                child: asyncTodos.when(
                   data: (data) {
                     return Text(
-                      data.toString(),
+                      data.length.toString(),
                       style: GoogleFonts.inter(
                         color: const Color(0xFF18312C),
                         fontSize: 48.0,

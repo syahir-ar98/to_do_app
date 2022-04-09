@@ -138,7 +138,8 @@ class TaskDesktop extends ConsumerWidget {
             // List of ToDo
             Consumer(
               builder: (_, ref, __) {
-                final asyncTodos = ref.watch(filteredTodoListProvider);
+                final filter = ref.watch(currentFilterProvider);
+                final asyncTodos = ref.watch(filteredTodosProvider(filter));
                 // return ListView.builder(itemBuilder: (context, index) {
                 //   final todo = todos[index];
                 //   return ToDoCard(

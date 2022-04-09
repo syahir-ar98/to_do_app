@@ -8,7 +8,7 @@ class TagsContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tagListAsyncValue = ref.watch(tagsListProvider);
+    final tagListAsyncValue = ref.watch(tagsProvider);
 
     return tagListAsyncValue.when(
       data: (data) {
@@ -20,7 +20,7 @@ class TagsContent extends ConsumerWidget {
           rows: List<DataRow>.generate(data.docs.length, (index) {
             final tag = data.docs[index].data();
 
-            final todoListByTag = ref.watch(todoListByTagProvider(tag.tagName));
+            final todoListByTag = ref.watch(todosByTagProvider(tag.tagName));
             return DataRow(cells: <DataCell>[
               DataCell(
                 Container(
@@ -47,7 +47,7 @@ class TagsContent extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 16.0),
                         child: Text(
-                          data.docs.length.toString(),
+                          data.length.toString(),
                           style: GoogleFonts.inter(
                             color: const Color(0xFF000000),
                             fontSize: 14.0,

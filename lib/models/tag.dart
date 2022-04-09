@@ -4,11 +4,13 @@ class Tag {
   final String tagName;
   final String bgColor;
   final String textColor;
+  final String uid;
 
   Tag({
     required this.tagName,
     required this.bgColor,
     required this.textColor,
+    required this.uid,
   });
 
   get getTagName => tagName;
@@ -20,6 +22,7 @@ class Tag {
           tagName: json['tagName'],
           bgColor: json['bgColor'],
           textColor: json['textColor'],
+          uid: json['uid'],
         );
 
   Map<String, Object?> toJson() {
@@ -27,6 +30,7 @@ class Tag {
       'tagName': tagName,
       'bgColor': bgColor,
       'textColor': textColor,
+      'uid': uid,
     };
   }
 }

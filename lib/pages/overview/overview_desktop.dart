@@ -87,6 +87,49 @@ class OverviewDesktop extends ConsumerWidget {
                                     ),
                                   ),
                                   const Spacer(),
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      child: Container(
+                                        height: 48.0,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFFDC59F),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              EvaIcons.plus,
+                                              size: 24.0,
+                                              color: Color(0xFFC4421A),
+                                            ),
+                                            const SizedBox(width: 8.0),
+                                            Text(
+                                              "TASK",
+                                              style: GoogleFonts.inter(
+                                                color: const Color(0xFFC4421A),
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return const AddTodo();
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  )
                                 ],
                               ),
                               const SizedBox(height: 24.0),
@@ -141,10 +184,12 @@ class OverviewDesktop extends ConsumerWidget {
                                   //     behavior: HitTestBehavior.translucent,
                                   //     child: Container(
                                   //       height: 48.0,
-                                  //       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  //       padding: const EdgeInsets.symmetric(
+                                  //           horizontal: 16.0),
                                   //       decoration: BoxDecoration(
                                   //         color: const Color(0xFFFDC59F),
-                                  //         borderRadius: BorderRadius.circular(8.0),
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(8.0),
                                   //       ),
                                   //       child: Row(
                                   //         children: [
@@ -226,57 +271,57 @@ class OverviewDesktop extends ConsumerWidget {
                             },
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 48.0),
-                          child: Container(
-                            height: 2.0,
-                            decoration:
-                                const BoxDecoration(color: Color(0xFFDCDCDC)),
-                          ),
-                        ),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            child: Container(
-                              height: 48.0,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFDC59F),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // const Icon(
-                                  //   EvaIcons.plus,
-                                  //   size: 24.0,
-                                  //   color: Color(0xFFC4421A),
-                                  // ),
-                                  // const SizedBox(width: 8.0),
-                                  Text(
-                                    "ADD NEW TASK",
-                                    style: GoogleFonts.inter(
-                                      color: const Color(0xFFC4421A),
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const AddTodo();
-                                },
-                              );
-                            },
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(bottom: 48.0),
+                        //   child: Container(
+                        //     height: 2.0,
+                        //     decoration:
+                        //         const BoxDecoration(color: Color(0xFFDCDCDC)),
+                        //   ),
+                        // ),
+                        // MouseRegion(
+                        //   cursor: SystemMouseCursors.click,
+                        //   child: GestureDetector(
+                        //     behavior: HitTestBehavior.translucent,
+                        //     child: Container(
+                        //       height: 48.0,
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 16.0),
+                        //       decoration: BoxDecoration(
+                        //         color: const Color(0xFFFDC59F),
+                        //         borderRadius: BorderRadius.circular(8.0),
+                        //       ),
+                        //       child: Row(
+                        //         mainAxisAlignment: MainAxisAlignment.center,
+                        //         children: [
+                        //           const Icon(
+                        //             EvaIcons.plus,
+                        //             size: 24.0,
+                        //             color: Color(0xFFC4421A),
+                        //           ),
+                        //           const SizedBox(width: 8.0),
+                        //           Text(
+                        //             "ADD NEW TASK",
+                        //             style: GoogleFonts.inter(
+                        //               color: const Color(0xFFC4421A),
+                        //               fontSize: 16.0,
+                        //               fontWeight: FontWeight.w700,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     onTap: () {
+                        //       showDialog(
+                        //         barrierDismissible: false,
+                        //         context: context,
+                        //         builder: (BuildContext context) {
+                        //           return const AddTodo();
+                        //         },
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
