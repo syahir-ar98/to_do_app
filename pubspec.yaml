@@ -1,5 +1,5 @@
 name: to_do_app
-description: A new Flutter project.
+description: ToDo App Project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -19,6 +19,7 @@ dependencies:
   cloud_firestore: ^3.1.10
   firebase_auth: ^3.3.11
   intl: ^0.17.0
+  dropdown_button2: ^1.4.0
 
 dev_dependencies:
   flutter_test:
@@ -27,9 +28,16 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter:
-
+  fonts:
+  - family: Inter
+    fonts:
+    - asset: google_fonts/Inter-Thin.ttf
+      weight: 100
+    - asset: google_fonts/Inter-ExtraLight.ttf
+      weight: 200
   uses-material-design: false
 
   assets:
     - assets/images/
+    - google_fonts/
 

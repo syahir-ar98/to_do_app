@@ -9,9 +9,7 @@ import 'package:to_do_app/responsive_layout.dart';
 PageController pageController = PageController();
 PageController signInPageController = PageController();
 
-List<String> listStatus = ["All", "Completed", "Active"];
-
-List<int> listTagCount = [3, 2, 1];
+const List<String> listStatus = ["All", "Completed", "Active"];
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);

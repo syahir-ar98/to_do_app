@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:to_do_app/components/nav_rail.dart';
 import 'package:to_do_app/pages/home/home.dart';
 import 'package:to_do_app/pages/overview/overview_desktop.dart';
 import 'package:to_do_app/pages/tasks/task_desktop.dart';
 
-class HomeDesktop extends ConsumerWidget {
+class HomeDesktop extends StatelessWidget {
   HomeDesktop({Key? key}) : super(key: key);
 
   final List<Widget> _listMenuPage = [
@@ -14,7 +13,7 @@ class HomeDesktop extends ConsumerWidget {
   ];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     debugPrint('Home - Desktop build');
     return SizedBox(
       width: MediaQuery.of(context).size.width,

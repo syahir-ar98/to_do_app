@@ -18,19 +18,18 @@ class AuthenticationService {
       return "Signed In Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        debugPrint("No user found for that email");
-        return e.message ?? "Error: Wrong Email";
+        return "No user found for that email";
       } else if (e.code == 'wrong-password') {
-        debugPrint("Wrong password provided for that user.");
-        return e.message ?? "Error: Wrong Password";
+        return "Wrong password provided for that user.";
       }
     } catch (e) {
       debugPrint(e.toString());
     }
-    return "Empty";
+    return "Invalid";
   }
 
-  Future<String> signUp(String name, String occupation, String email, String password) async {
+  Future<String> signUp(
+      String name, String occupation, String email, String password) async {
     try {
       final _result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -40,14 +39,14 @@ class AuthenticationService {
       return "Successfully Signed Up";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        debugPrint('Password provided is too weak');
+        return 'Password provided is too weak';
       } else if (e.code == 'email-already-in-use') {
-        debugPrint('The account already exist for that email.');
+        return 'The account already exist for that email.';
       }
     } catch (e) {
       debugPrint(e.toString());
     }
-    return "Empty";
+    return "Invalid";
   }
 
   Future<String> signOut() async {

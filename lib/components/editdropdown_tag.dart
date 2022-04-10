@@ -29,6 +29,7 @@ class _DropdownTagState extends ConsumerState<EditDropdownTag> {
           });
           String? _selectedValue;
           return DropdownButtonFormField<String>(
+            menuMaxHeight: 100,
             icon: const Icon(EvaIcons.chevronDownOutline, size: 24.0),
             decoration: InputDecoration(
               border: OutlineInputBorder(

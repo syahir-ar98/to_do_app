@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +28,7 @@ class _DropdownTagState extends ConsumerState<DropdownTag> {
             return tag.tagName;
           });
           String? _selectedValue;
-          return DropdownButtonFormField<String>(
+          return DropdownButtonFormField2<String>(
             icon: const Icon(EvaIcons.chevronDownOutline, size: 24.0),
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -40,6 +41,8 @@ class _DropdownTagState extends ConsumerState<DropdownTag> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
+            dropdownDecoration:
+                BoxDecoration(borderRadius: BorderRadius.circular(8.0)),
             hint: Text(
               "Select a tag",
               style: GoogleFonts.inter(

@@ -92,6 +92,7 @@ class SignIn extends ConsumerWidget {
           const SizedBox(height: 20.0),
           TextFormField(
             controller: passwordController,
+            obscureText: true,
             cursorColor: const Color(0xFF00897B),
             cursorWidth: 2.0,
             cursorHeight: 22.0,
@@ -125,38 +126,41 @@ class SignIn extends ConsumerWidget {
                     .read(authServiceProvider)
                     .signIn(emailController.text, passwordController.text)
                     .then(
-                      (value) => ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          width: 300.0,
-                          backgroundColor: const Color(0xFFA7FFEB),
-                          behavior: SnackBarBehavior.floating,
-                          content: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(right: 16.0),
-                                child: Icon(
-                                  EvaIcons.checkmarkCircle2Outline,
-                                  size: 24.0,
-                                  color: Color(0xFF009688),
-                                ),
+                  (value) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: const Color(0xFFA7FFEB),
+                        behavior: SnackBarBehavior.floating,
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 16.0),
+                              child: Icon(
+                                EvaIcons.checkmarkCircle2Outline,
+                                size: 24.0,
+                                color: Color(0xFF009688),
                               ),
-                              Text(
-                                value,
-                                style: GoogleFonts.inter(
-                                  color: const Color(0xFF009688),
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            ),
+                            Text(
+                              value,
+                              style: GoogleFonts.inter(
+                                color: const Color(0xFF009688),
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ],
-                          ),
-                          duration: const Duration(milliseconds: 2000),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
+                            ),
+                          ],
                         ),
+                        duration: const Duration(milliseconds: 2000),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0)),
                       ),
                     );
+                    emailController.clear();
+                    passwordController.clear();
+                  },
+                );
               },
               child: Text(
                 "SIGN IN",

@@ -121,9 +121,39 @@ class _CustomNavigationRailState extends ConsumerState<CustomNavigationRail> {
               icon: EvaIcons.logOutOutline,
               logic: () {
                 ref.read(currentMenuProvider.state).state = "Overview";
-                ref.read(authServiceProvider).signOut();
-                emailController.clear();
-                passwordController.clear();
+                ref.read(authServiceProvider).signOut().then(
+                      (value) => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          width: 300.0,
+                          backgroundColor: const Color(0xFFA7FFEB),
+                          behavior: SnackBarBehavior.floating,
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(right: 16.0),
+                                child: Icon(
+                                  EvaIcons.checkmarkCircle2Outline,
+                                  size: 24.0,
+                                  color: Color(0xFF009688),
+                                ),
+                              ),
+                              Text(
+                                value,
+                                style: GoogleFonts.inter(
+                                  color: const Color(0xFF009688),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          duration: const Duration(milliseconds: 2000),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0)),
+                        ),
+                      ),
+                    );
               },
             ),
             Padding(

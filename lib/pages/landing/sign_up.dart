@@ -212,10 +212,6 @@ class _SignUpState extends ConsumerState<SignUp> {
             child: TextButton(
               onPressed: () {
                 if (dropdownOccupationKey.currentState!.validate()) {
-                  debugPrint("name:${nameController.text}");
-                  debugPrint("occ:${occupationController.text}");
-                  debugPrint("email:${emailController.text}");
-                  debugPrint("pass:${passwordController.text}");
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Creating Account.')),
                   );

@@ -28,6 +28,7 @@ final stateFilterProvider = Provider.family<bool, String>((ref, filter) {
 
 // Firestore Database Provider
 final dataServiceProvider = Provider((ref) {
+  ref.watch(authStateProvider);
   final _userId = ref.watch(authProvider).currentUser!.uid;
   return DatabaseService(uid: _userId);
 });
